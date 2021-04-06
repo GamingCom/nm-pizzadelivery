@@ -8,8 +8,8 @@ local delivered = false
 local loc = {x=0,y=0,z=0}
 local blip = nil
 
-RegisterNetEvent("RLCore:Client:OnPlayerLoaded")
-AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
+RegisterNetEvent("QBCore:Client:OnPlayerLoaded")
+AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
     local player = QBCore.Functions.GetPlayerData()
     if player.job.name == "ambulance" then
         loc = Config.Locations.job
