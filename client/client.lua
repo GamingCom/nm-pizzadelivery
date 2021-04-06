@@ -70,7 +70,7 @@ Citizen.CreateThread(function()
                         RemoveBlip(blip) -- Clear the blip
                         startJob = false
                         delivered = false
-                        RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                        QBCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
                     end
                 end
             end
