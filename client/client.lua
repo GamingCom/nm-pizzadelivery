@@ -1,5 +1,5 @@
-RLCore = nil
-TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
+QBCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) QBCore = obj end)
 
 local tabletObject = nil
 local dict = nil
@@ -10,7 +10,7 @@ local blip = nil
 
 RegisterNetEvent("RLCore:Client:OnPlayerLoaded")
 AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
-    local player = RLCore.Functions.GetPlayerData()
+    local player = QBCore.Functions.GetPlayerData()
     if player.job.name == "ambulance" then
         loc = Config.Locations.job
         blip = AddBlipForCoord(loc.x, loc.y, loc.z)
@@ -26,7 +26,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0) -- Prevent crashing  
-        local player = RLCore.Functions.GetPlayerData()
+        local player = QBCore.Functions.GetPlayerData()
         local plyPed = PlayerPedId()
         local plyCoords = GetEntityCoords(plyPed)
         local pos = Config.Locations
