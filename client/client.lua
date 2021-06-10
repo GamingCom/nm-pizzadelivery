@@ -1,5 +1,5 @@
-QBCore = nil
-TriggerEvent('RLCore:GetObject', function(obj) QBCore = obj end)
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
 local tabletObject = nil
 local dict = nil
@@ -8,10 +8,10 @@ local delivered = false
 local loc = {x=0,y=0,z=0}
 local blip = nil
 
-RegisterNetEvent("QBCore:Client:OnPlayerLoaded")
-AddEventHandler("QBCore:Client:OnPlayerLoaded", function()
-    local player = QBCore.Functions.GetPlayerData()
-    if player.job.name == "ambulance" then
+RegisterNetEvent("RLCore:Client:OnPlayerLoaded")
+AddEventHandler("RLCore:Client:OnPlayerLoaded", function()
+    local player = RLCore.Functions.GetPlayerData()
+    if player.job.name == "pizza" then
         loc = Config.Locations.job
         blip = AddBlipForCoord(loc.x, loc.y, loc.z)
         SetBlipSprite(blip, 267)
@@ -26,13 +26,13 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0) -- Prevent crashing  
-        local player = QBCore.Functions.GetPlayerData()
-        local plyPed = PlayerPedId()
-        local plyCoords = GetEntityCoords(plyPed)
-        local pos = Config.Locations
-
-        if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, pos.job.x, pos.job.y, pos.job.z, true) < 5) then
-            if player.job.name == "ambulance" then
+        local player = RLCore.Functions.GetPlayerData()
+        
+        if player.job.name == "pizza" then
+            local plyPed = PlayerPedId()
+            local plyCoords = GetEntityCoords(plyPed)
+            local pos = Config.Locations
+            if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, pos.job.x, pos.job.y, pos.job.z, true) < 5) then
                 DrawText3D(pos.job.x, pos.job.y, pos.job.z, "~b~[E]~w~ - Start Delivering Pizza")
                 if IsControlJustReleased(0, 38) then
                     ClearPedTasks(PlayerPedId())
@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
         end
 
         if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, pos.exit.x, pos.exit.y, pos.exit.z, true) < 5) and startJob then
-            if player.job.name == "ambulance" then
+            if player.job.name == "pizza" then
                 if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then
                     DrawText3D(pos.exit.x, pos.exit.y, pos.exit.z, "~b~[E]~w~ - Stop Delivering Pizza")
                     if IsControlJustReleased(0, 38) then
@@ -70,14 +70,14 @@ Citizen.CreateThread(function()
                         RemoveBlip(blip) -- Clear the blip
                         startJob = false
                         delivered = false
-                        QBCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
+                        RLCore.Functions.DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1)))
                     end
                 end
             end
         end
 
         if (GetDistanceBetweenCoords(plyCoords.x, plyCoords.y, plyCoords.z, loc.x, loc.y, loc.z, true) < 2.5) and not delivered and startJob then
-            if player.job.name == "ambulance" then
+            if player.job.name == "pizza" then
                 DrawText3D(loc.x, loc.y, loc.z, "~b~[E]~w~ - Deliver The Pizza")
                 if IsControlJustReleased(0, 38) then
                     delivered = true
