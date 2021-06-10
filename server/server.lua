@@ -1,5 +1,5 @@
-QBCore = nil
-TriggerEvent('RLCore:GetObject', function(obj) QBCore = obj end)
+RLCore = nil
+TriggerEvent('RLCore:GetObject', function(obj) RLCore = obj end)
 
 CreateThread(function()
     Wait(1200)
@@ -9,7 +9,8 @@ end)
 RegisterServerEvent('nm-pizzadelivery:server:givemoney')
 AddEventHandler('nm-pizzadelivery:server:givemoney', function(tip)
     local src = source
-    local xPlayer = QBCore.Functions.GetPlayer(src)
-  
-    xPlayer.Functions.AddMoney("cash", tip)
+    local xPlayer = RLCore.Functions.GetPlayer(src)
+    if tip < 1000 then
+        xPlayer.Functions.AddMoney("cash", tip)
+    end
 end)
